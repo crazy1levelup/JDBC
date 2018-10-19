@@ -7,10 +7,11 @@ public class ConnectionConfiguration {
 
     public static Connection getConnection(){
         Connection connection = null;
+        UserName username = new UserName();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseNAME=Animale;integratedsecurity=true", "DESKTOP-7H5NFER", "");
+            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseNAME=Animale;integratedsecurity=true", username.getUserName(), "");
         }catch (Exception e){
             e.printStackTrace();
         }
