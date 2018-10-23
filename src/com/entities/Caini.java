@@ -3,15 +3,6 @@ package com.entities;
 public class Caini {
 
     private int Id;
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
-
     private String Name;
     private String Race;
     private int AngerScale;
@@ -32,6 +23,14 @@ public class Caini {
         this.Name = name;
         this.Race = Race;
         this.AngerScale = AngerScale;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 
     public void setName(String name) {

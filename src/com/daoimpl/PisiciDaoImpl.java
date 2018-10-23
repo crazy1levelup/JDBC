@@ -1,7 +1,7 @@
 package com.daoimpl;
 
-import com.dao.CainiDao;
-import com.entities.Caini;
+import com.dao.PisiciDao;
+import com.entities.Pisici;
 import com.javatosql.ed.ConnectionConfiguration;
 import com.mysql.cj.xdevapi.SqlDataResult;
 
@@ -9,21 +9,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CainiDaoImpl implements CainiDao {
+public class PisiciDaoImpl implements PisiciDao {
+
     @Override
-    public void insert(Caini caine) {
+    public void insert(Pisici pisici) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO Caini(Id, Name, Race, AngerScale) " +
+            preparedStatement = connection.prepareStatement("INSERT INTO Pisici (Id,Name,Race,SoftnessScale) " +
                     "VALUES (?,?,?,?)");
-            preparedStatement.setInt(1, caine.getId());
-            preparedStatement.setString(2, caine.getName());
-            preparedStatement.setString(3, caine.getRace());
-            preparedStatement.setInt(4, caine.getAngerScale());
+            preparedStatement.setInt(1, pisici.getId());
+            preparedStatement.setString(2, pisici.getName());
+            preparedStatement.setString(3, pisici.getRace());
+            preparedStatement.setInt(4, pisici.getSoftnessScale());
             preparedStatement.executeUpdate();
-            System.out.println("INSERT INTO Caini(Id, Name, Race, AngerScale) VALUES (?,?,?,?)");
+            System.out.println("INSERT INTO Pisici (Id,Name,Race,SoftnessScale VALUES (?,?,?,?)");
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -45,28 +47,27 @@ public class CainiDaoImpl implements CainiDao {
     }
 
     @Override
-    public Caini selectById(int id) {
-        Caini caini = new Caini();
+    public Pisici selectById(int id) {
+        Pisici pisici = new Pisici();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT * FROM Caini WHERE Id = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Pisici WHERE Id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                caini.setId(resultSet.getInt("Id"));
-                caini.setName(resultSet.getString("Name"));
-                caini.setRace(resultSet.getString("Race"));
-                caini.setAngerScale(resultSet.getInt("AngerScale"));
-
+                pisici.setId(resultSet.getInt("Id"));
+                pisici.setName(resultSet.getString("Name"));
+                pisici.setRace(resultSet.getString("Race"));
+                pisici.setSoftnessScale(resultSet.getInt("SoftnessScale"));
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-
         } finally {
             if (resultSet != null) {
                 try {
@@ -76,6 +77,7 @@ public class CainiDaoImpl implements CainiDao {
                 }
             }
             if (preparedStatement != null) {
+
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
@@ -90,12 +92,12 @@ public class CainiDaoImpl implements CainiDao {
                 }
             }
         }
-        return caini;
+        return pisici;
     }
 
     @Override
-    public List<Caini> selectAll() {
-        List<Caini> caini = new ArrayList<Caini>();
+    public List<Pisici> selectAll() {
+        List<Pisici> pisici = new ArrayList<Pisici>();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -103,16 +105,16 @@ public class CainiDaoImpl implements CainiDao {
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM Caini");
+            resultSet = statement.executeQuery("SELECT * FROM Pisici");
 
             while (resultSet.next()) {
-                Caini caine = new Caini();
-                caine.setId(resultSet.getInt("Id"));
-                caine.setName(resultSet.getString("Name"));
-                caine.setRace(resultSet.getString("Race"));
-                caine.setAngerScale(resultSet.getInt("AngerScale"));
+                Pisici pisica = new Pisici();
+                pisica.setId(resultSet.getInt("Id"));
+                pisica.setName(resultSet.getString("Name"));
+                pisica.setRace(resultSet.getString("Race"));
+                pisica.setSoftnessScale(resultSet.getInt("SoftnessScale"));
 
-                caini.add(caine);
+                pisici.add(pisica);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,20 +141,22 @@ public class CainiDaoImpl implements CainiDao {
                 }
             }
         }
-        return caini;
+
+        return pisici;
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteById(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
+
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("DELETE FROM Caini WHERE Id = ?");
+            preparedStatement = connection.prepareStatement("DELETE FROM Pisici WHERE Id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-            System.out.println("DELETE FROM Caini WHERE id = ?");
+            System.out.println("DELETE FROM Pisici WHERE Id = ?");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,23 +179,21 @@ public class CainiDaoImpl implements CainiDao {
     }
 
     @Override
-    public void update(Caini caine, int id) {
+    public void update(Pisici pisici, int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("UPDATE Caini SET " +
-                    "Name = ?, Race = ?, AngerScale = ? WHERE Id = ?");
-            preparedStatement.setString(1, caine.getName());
-            preparedStatement.setString(2, caine.getRace());
-            preparedStatement.setInt(3, caine.getAngerScale());
+            preparedStatement = connection.prepareStatement("UPDATE Pisici SET " +
+                    " Name = ?, Race = ?, SoftnessScale = ? WHERE Id = ?");
+
+            preparedStatement.setString(1, pisici.getName());
+            preparedStatement.setString(2, pisici.getRace());
+            preparedStatement.setInt(3, pisici.getSoftnessScale());
             preparedStatement.setInt(4, id);
             preparedStatement.executeUpdate();
-
-            System.out.println("UPDATE Caini SET " +
-                    "Name = ?, Race = ? WHERE Id = ?");
-
+            System.out.println("UPDATE Pisici SET Id = ?, Name = ?, Race = ?, SoftnessScale = ? WHERE id = ?");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
