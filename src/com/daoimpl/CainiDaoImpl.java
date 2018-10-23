@@ -14,77 +14,77 @@ public class CainiDaoImpl implements CainiDao {
     public void insert(Caini caine) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-                try{
-                connection = ConnectionConfiguration.getConnection();
-                preparedStatement = connection.prepareStatement("INSERT INTO Caini(Id, Name, Race, AngerScale) VALUES (?,?,?,?)");
-                preparedStatement.setInt(1, caine.getId());
-                preparedStatement.setString(2,caine.getName() );
-                preparedStatement.setString(3,caine.getRace());
-                preparedStatement.setInt(4,caine.getAngerScale());
-                preparedStatement.executeUpdate();
-                System.out.println("INSERT INTO Caini(Id, Name, Race, AngerScale) VALUES (?,?,?,?)");
-                }catch (Exception e){
+        try {
+            connection = ConnectionConfiguration.getConnection();
+            preparedStatement = connection.prepareStatement("INSERT INTO Caini(Id, Name, Race, AngerScale) VALUES (?,?,?,?)");
+            preparedStatement.setInt(1, caine.getId());
+            preparedStatement.setString(2, caine.getName());
+            preparedStatement.setString(3, caine.getRace());
+            preparedStatement.setInt(4, caine.getAngerScale());
+            preparedStatement.executeUpdate();
+            System.out.println("INSERT INTO Caini(Id, Name, Race, AngerScale) VALUES (?,?,?,?)");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
                     e.printStackTrace();
-                }finally {
-if(preparedStatement !=null){
-   try{ preparedStatement.close();
-   }catch (SQLException e){
-       e.printStackTrace();
-   }
-}
-if(connection != null){
-    try{connection.close();
-    }catch (SQLException e){
-        e.printStackTrace();
-    }
-}
                 }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public Caini selectById(int id) {
         Caini caini = new Caini();
-        Connection connection =null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try{
+        try {
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("SELECT * FROM Caini WHERE Id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 caini.setId(resultSet.getInt("Id"));
-              caini.setName(resultSet.getString("Name"));
-              caini.setRace(resultSet.getString("Race"));
-              caini.setAngerScale(resultSet.getInt("AngerScale"));
+                caini.setName(resultSet.getString("Name"));
+                caini.setRace(resultSet.getString("Race"));
+                caini.setAngerScale(resultSet.getInt("AngerScale"));
 
             }
-
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 
-        }finally {
-            if(resultSet !=null){
-                try{
-                resultSet.close();
-            }catch (SQLException e){
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(preparedStatement !=null){
-                try{
+            if (preparedStatement != null) {
+                try {
                     preparedStatement.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(connection!=null){
-                try{
+            if (connection != null) {
+                try {
                     connection.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
@@ -112,9 +112,7 @@ if(connection != null){
                 caine.setAngerScale(resultSet.getInt("AngerScale"));
 
                 caini.add(caine);
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -130,7 +128,6 @@ if(connection != null){
                     statement.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
-
                 }
             }
             if (connection != null) {
@@ -140,50 +137,40 @@ if(connection != null){
                     e.printStackTrace();
                 }
             }
-
         }
         return caini;
     }
-
-
-
-
 
     @Override
     public void delete(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        try{
+        try {
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("DELETE FROM Caini WHERE Id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-
             System.out.println("DELETE FROM Caini WHERE id = ?");
 
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(preparedStatement != null){
+        } finally {
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(connection != null){
+            if (connection != null) {
                 try {
                     connection.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-
         }
-
-
     }
 
     @Override
@@ -191,42 +178,36 @@ if(connection != null){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        try{
+        try {
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE Caini SET " +
                     "Name = ?, Race = ?, AngerScale = ? WHERE Id = ?");
             preparedStatement.setString(1, caine.getName());
             preparedStatement.setString(2, caine.getRace());
-            preparedStatement.setInt(3,caine.getAngerScale());
+            preparedStatement.setInt(3, caine.getAngerScale());
             preparedStatement.setInt(4, id);
             preparedStatement.executeUpdate();
 
             System.out.println("UPDATE Caini SET " +
                     "Name = ?, Race = ? WHERE Id = ?");
 
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(preparedStatement != null){
+        } finally {
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(connection != null){
+            if (connection != null) {
                 try {
                     connection.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-
         }
-
-
-
-
     }
 }

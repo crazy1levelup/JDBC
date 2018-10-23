@@ -2,7 +2,7 @@ package com.entities;
 
 public class Caini {
 
-private int Id;
+    private int Id;
 
     public int getId() {
         return Id;
@@ -13,26 +13,26 @@ private int Id;
     }
 
     private String Name;
-private String Race;
-private int AngerScale;
+    private String Race;
+    private int AngerScale;
 
-public Caini(){
+    public Caini() {
 
-}
+    }
 
-public Caini(int Id, String name, String Race, int AngerScale){
-    this.Id = Id;
-    this.Name = name;
-    this.Race = Race;
-    this.AngerScale = AngerScale;
+    public Caini(int Id, String name, String Race, int AngerScale) {
+        this.Id = Id;
+        this.Name = name;
+        this.Race = Race;
+        this.AngerScale = AngerScale;
 
-}
+    }
 
-public Caini(String name, String Race, int AngerScale){
-    this.Name = name;
-    this.Race = Race;
-    this.AngerScale = AngerScale;
-}
+    public Caini(String name, String Race, int AngerScale) {
+        this.Name = name;
+        this.Race = Race;
+        this.AngerScale = AngerScale;
+    }
 
     public void setName(String name) {
         Name = name;
